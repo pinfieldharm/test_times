@@ -1,0 +1,2 @@
+defmodule ExUnitTimer do
+end
