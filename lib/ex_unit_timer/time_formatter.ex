@@ -2,7 +2,7 @@ defmodule ExUnitTimer.TimeFormatter do
   require Logger
   use GenEvent
   
-  def init(opts) do
+  def init(_opts) do
     results = []
     {:ok, results}
   end
