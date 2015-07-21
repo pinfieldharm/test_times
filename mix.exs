@@ -26,6 +26,7 @@ defmodule TestTimes.Mixfile do
 
   defp package do
     [
+      files: ["lib", "mix.exs", "README.md", "LICENSE"],
       contributors: ["Paul Infield-Harm"],
       licenses: ["Apache 2.0"],
       links: %{"Github" => "https://github.com/pinfieldharm/test_times"}
