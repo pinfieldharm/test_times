@@ -9,24 +9,27 @@ defmodule TestTimes.Mixfile do
      start_permanent: Mix.env == :prod,
      deps: deps]
   end
-
-  # Configuration for the OTP application
-  #
-  # Type `mix help compile.app` for more information
+  
   def application do
-    [applications: [:logger]]
+    []
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type `mix help deps` for more examples and options
   defp deps do
     []
   end
+
+  defp description do
+    """
+    ExUnit add-on that prints table of test run times with --times flag.
+    """
+  end
+
+  defp package do
+    [
+      contributors: ["Paul Infield-Harm"],
+      licenses: ["Apache 2.0"],
+      links: %{"Github" => "https://github.com/pinfieldharm/test_times"}
+    ]
+  end
+
 end
