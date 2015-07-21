@@ -5,23 +5,17 @@ defmodule TestTimes.Mixfile do
     [app: :test_times,
      version: "1.0.0",
      elixir: "~> 1.0",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps]
+     description: "Report individual test times in ascending order",
+     deps: deps,
+     package: package]
   end
   
   def application do
-    []
+    [applications: []]
   end
 
   defp deps do
     []
-  end
-
-  defp description do
-    """
-    ExUnit add-on that prints table of test run times with --times flag.
-    """
   end
 
   defp package do
