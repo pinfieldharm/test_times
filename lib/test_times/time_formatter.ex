@@ -1,4 +1,4 @@
-defmodule ExUnitTimer.TimeFormatter do
+defmodule TestTimes.TimeFormatter do
   require Logger
   use GenEvent
   

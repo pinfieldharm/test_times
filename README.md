@@ -1,5 +1,5 @@
-ExUnitTimer
-===========
+TestTimes
+=========
 
 Get a report of test times when running ```mix test --times```. Slowest tests appear at the bottom.
 
@@ -26,12 +26,12 @@ Get a report of test times when running ```mix test --times```. Slowest tests ap
 
 Add a dependency in ```mix.exs```:
 
-```{:ex_unit_timer, "~> 1.0.0"}```
+```{:test_times, "~> 1.0.0"}```
 
 Add a line to ```test/test_helper.exs``` before the call to ```ExUnit.start```:
 
 ```elixir
-ExUnitTimer.setup
+TestTimes.setup
 ```
 
 When you want a report of times, use the ```--times``` flag

@@ -1,9 +1,9 @@
-defmodule ExUnitTimer do
+defmodule TestTimes do
 
   def setup do
     if Enum.member?(System.argv, "--times") do
       ExUnit.configure(
-        add_formatter(ExUnit.configuration, ExUnitTimer.TimeFormatter)
+        add_formatter(ExUnit.configuration, TestTimes.TimeFormatter)
       )
     end
   end

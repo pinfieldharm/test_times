@@ -1,8 +1,8 @@
-defmodule ExUnitTimer.Mixfile do
+defmodule TestTimes.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :ex_unit_timer,
+    [app: :test_times,
      version: "1.0.0",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
