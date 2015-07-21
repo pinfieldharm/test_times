@@ -6,7 +6,7 @@ Get a report of test times when running ```mix test --times```. Slowest tests ap
 ### Sample report
 
 ```
- t(ms) |                                              test path | test name 
+t (ms) |                                              test path | test name 
 ======================================================================================
  19651 |        test/controllers/profile_controller_test.exs:17 | shows a number of cr
  21045 |      test/controllers/character_controller_test.exs:42 | create creates a cha
