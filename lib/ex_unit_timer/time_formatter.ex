@@ -15,6 +15,8 @@ defmodule ExUnitTimer.TimeFormatter do
     sorted = Enum.sort(results, fn (a,b) -> a.time < b.time end)
     rows = Enum.map(sorted, &test_to_row/1)
     widths = widths(rows)
+    print_header(widths)
+    print_divider(widths)
     print_time_reports(rows, widths)
     :remove_handler
   end
@@ -27,7 +29,8 @@ defmodule ExUnitTimer.TimeFormatter do
     time = String.length(hd(List.last(rows)))
     path = Enum.max(Enum.map(rows, fn [_, path, _] -> String.length(path) end))
     name = max(terminal_width - (time + path + 6), 20)
-    %{time: time, path: path, name: name}
+    total = time + path + name + 6
+    %{time: time, path: path, name: name, total: total}
   end
 
   defp test_to_row(t) do
@@ -36,12 +39,20 @@ defmodule ExUnitTimer.TimeFormatter do
       String.replace("#{t.name}", ~r/test /,"", global: false)]
   end
 
-  defp print_time_reports(rows, widths) do
-    Enum.each( rows, 
-      &(:io.format("~#{widths.time}s | ~#{widths.path}s | ~-#{widths.name}s~n", &1))
-    )
+  defp print_header(widths) do
+    format_row(["t (ms)", "test path", "test name"], widths)
   end
 
+  defp print_divider(widths) do
+    IO.puts String.duplicate("=", widths.total)
+  end
+  defp print_time_reports(rows, widths) do
+    Enum.each(rows, &(format_row(&1, widths)))
+  end
+
+  defp format_row(row, widths) do
+    :io.format("~#{widths.time}s | ~#{widths.path}s | ~-#{widths.name}s~n", row)
+  end
   defp terminal_width do
     try do
       case System.cmd("tput", ["cols"]) do
