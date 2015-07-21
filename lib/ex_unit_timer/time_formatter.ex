@@ -12,7 +12,10 @@ defmodule ExUnitTimer.TimeFormatter do
   end
 
   def handle_event({:suite_finished, _, _}, results) do
-    print_time_reports(results)
+    sorted = Enum.sort(results, fn (a,b) -> a.time < b.time end)
+    rows = Enum.map(sorted, &test_to_row/1)
+    widths = widths(rows)
+    print_time_reports(rows, widths)
     :remove_handler
   end
 
@@ -20,16 +23,23 @@ defmodule ExUnitTimer.TimeFormatter do
     {:ok, results}
   end
 
-  defp print_time_reports(results) do
-    
-    sorted = Enum.sort(results, fn (a,b) -> a.time < b.time end)
-    time_width = String.length("#{List.last(sorted).time}")
-    
-    mapped = Enum.map(sorted, &([&1.time, relative_location(&1), String.replace("#{&1.name}", ~r/test /,"", global: false)]))
-    path_width = Enum.max(Enum.map(mapped, fn [_, path, _] -> String.length(path) end))
-    name_width = max(terminal_width - (time_width + path_width + 6), 20)
-    Enum.each(mapped, fn [time, path, name] -> :io.format("~#{time_width}s | ~#{path_width}s | ~-#{name_width}.#{name_width}s~n", ["#{time}", "#{path}", "#{name}"]) end) 
+  defp widths(rows) do
+    time = String.length(hd(List.last(rows)))
+    path = Enum.max(Enum.map(rows, fn [_, path, _] -> String.length(path) end))
+    name = max(terminal_width - (time + path + 6), 20)
+    %{time: time, path: path, name: name}
+  end
 
+  defp test_to_row(t) do
+    ["#{t.time}", 
+      relative_location(t), 
+      String.replace("#{t.name}", ~r/test /,"", global: false)]
+  end
+
+  defp print_time_reports(rows, widths) do
+    Enum.each( rows, 
+      &(:io.format("~#{widths.time}s | ~#{widths.path}s | ~-#{widths.name}s~n", &1))
+    )
   end
 
   defp terminal_width do
